@@ -1,5 +1,6 @@
 pipeline {
   agent none
+
   stages {
     stage('Build') {
       post {
@@ -18,7 +19,7 @@ pipeline {
       }
       steps {
         echo 'building iis container'
-        sh 'docker build -t example/iis "Dockerfile.iis"'
+        sh 'docker build -t example/iis --file ./Dockerfile.iis .'
       }
     }
 
