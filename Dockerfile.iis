@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2022
+
+# Ensure PowerShell is used and not cmd
+SHELL ["powershell", "-NoProfile", "-Command", "$ErrorActionPreference = 'Stop';"]
+
+# Create directories for the websites
+RUN New-Item -ItemType Directory -Path 'C:\inetpub\site1'; \
+  New-Item -ItemType Directory -Path 'C:\inetpub\site2'
+
+# Copy the website content into the container
+COPY static/website-1.html 'C:/inetpub/site1/index.html'
+COPY static/website-2.html 'C:/inetpub/site2/index.html'
+
+# Configure IIS to host multiple websites
+RUN Remove-Website -Name 'Default Web Site'; \
+  New-Website -Name 'SiteOne' -Port 80 -PhysicalPath 'C:\inetpub\site1' -ApplicationPool 'FirstAppPool'; \
+  New-Website -Name 'SiteTwo' -Port 81 -PhysicalPath 'C:\inetpub\site2' -ApplicationPool 'SecondAppPool'
+
+# Expose the necessary ports
+EXPOSE 80 81
+
+ENTRYPOINT ["cmd", "/c", "C:\\ServiceMonitor.exe w3svc"]
