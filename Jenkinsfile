@@ -1,11 +1,20 @@
 pipeline {
-  agent any
-
+  agent none
   stages {
-    stage('Build') {
+    stage('Debug') {
+      agent any
       steps {
-        echo 'building iis container'
-        sh 'docker build -t example/iis --file ./Dockerfile.iis .'
+        sh 'ls -la'
+      }
+    }
+    stage('Test') {
+      agent {
+        dockerfile {
+          filename 'Dockerfile.ansible'
+        }
+      }
+      steps {
+        sh 'ansible-playbook -i /tmp/ansible/hosts.yaml /tmp/ansible/playbook.yaml'
       }
     }
   }
