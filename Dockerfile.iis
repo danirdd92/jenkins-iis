@@ -18,5 +18,3 @@ RUN Remove-Website -Name 'Default Web Site'; \
 
 # Expose the necessary ports
 EXPOSE 80 81
-
-ENTRYPOINT ["cmd", "/c", "C:\\ServiceMonitor.exe w3svc"]
