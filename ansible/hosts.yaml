@@ -1,0 +1,9 @@
+ungrouped:
+  hosts:
+    iis:
+      ansible_host: WIN-TLFGPFU1DDG
+      ansible_user: Administrator
+      ansible_password: Qazqaz1
+      ansible_port: 5986
+      ansible_connection: winrm
+      ansible_winrm_transport: basic

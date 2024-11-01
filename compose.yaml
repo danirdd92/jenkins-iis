@@ -16,6 +16,7 @@ services:
     volumes:
       - jenkins-data:/var/jenkins_home
       - jenkins-docker-certs:/certs/client:ro
+      - ./ansible:/tmp/ansible
     depends_on:
       - docker
 
@@ -34,7 +35,7 @@ services:
     volumes:
       - jenkins-docker-certs:/certs/client
       - jenkins-data:/var/jenkins_home
-
+      - ./ansible:/tmp/ansible
 networks:
   jenkins:
 

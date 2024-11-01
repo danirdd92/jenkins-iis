@@ -1,0 +1,8 @@
+{
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": [
+      "file:///home/dani/tools/jenkins-iis/ansible/inventory.yaml",
+      "file:///home/dani/tools/jenkins-iis/ansible/hosts.yaml"
+    ]
+  }
+}
