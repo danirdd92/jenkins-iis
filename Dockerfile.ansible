@@ -5,3 +5,5 @@ RUN apk update && \
   apk add --no-cache python3 py3-pip && \
   # Install pywinrm and requests
   pip3 install --no-cache-dir pywinrm requests
+
+COPY anisble /tmp/ansible
