@@ -6,4 +6,4 @@ RUN apk update && \
   # Install pywinrm and requests
   pip3 install --no-cache-dir pywinrm requests
 
-COPY ./anisble/ /tmp/ansible
+COPY ./anisble/* /tmp/ansible
