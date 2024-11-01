@@ -1,12 +1,10 @@
 pipeline {
-  agent any
+  agent none
   stages {
     stage('Build') {
       agent {
         docker {
           image 'alpine/ansible'
-          args '''-v /var/jenkins_home:/var/jenkins_home  -v /tmp/ansible:/tmp/ansible
-'''
         }
 
       }
