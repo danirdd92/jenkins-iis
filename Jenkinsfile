@@ -1,6 +1,9 @@
 pipeline {
   agent none
   stages {
+    stage("Debug"){
+      sh "ls -la"
+    }
     stage('Test') {
       agent {
         dockerfile {
