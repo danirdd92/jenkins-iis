@@ -7,3 +7,5 @@ RUN apk update && \
   pip3 install --no-cache-dir pywinrm requests
 
 COPY ./ansible/ /tmp/ansible
+
+ENV HOME=/tmp
