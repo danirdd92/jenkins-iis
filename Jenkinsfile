@@ -9,7 +9,6 @@ pipeline {
         }
       }
       steps {
-        echo 'building iis container'
         sh 'ansible-playbook -i /tmp/ansible/hosts.yaml /tmp/ansible/playbook.yaml'
       }
     }
