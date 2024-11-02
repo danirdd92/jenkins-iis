@@ -1,0 +1,13 @@
+---
+websites:
+  - name: 'single-page-app'
+    physical_path: 'C:\\inetpub\\wwwroot\\single-page-app'
+    local_source: 'wwwroot/single-page-app'
+    port: 80
+  - name: 'static-web'
+    physical_path: 'C:\\inetpub\\wwwroot\\static-web'
+    local_source: 'wwwroot/static-web'
+    port: 81
+
+backup_dir: 'C:\\backup'
+application_pool: 'DefaultAppPool'

@@ -1,6 +1,5 @@
 ---
-- name: Run Hello World on Windows Server
+- name: Test
   hosts: iis
-  tasks:
-    - name: Execute PowerShell command
-      win_shell: Write-Host "Hello World from Ansible"
+  roles:
+    - backup_and_deploy_iis_websites
