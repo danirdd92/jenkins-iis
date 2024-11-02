@@ -40,7 +40,7 @@
   loop: "{{ websites }}"
 
 - name: Copy new website content to remote server
-  windows.win_copy:
+  win_copy:
     src: "{{ item.local_source }}/"
     dest: "{{ item.physical_path }}"
     recurse: yes
