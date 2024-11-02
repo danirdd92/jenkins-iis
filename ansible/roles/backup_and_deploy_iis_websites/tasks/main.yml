@@ -4,13 +4,19 @@
     path: "{{ backup_dir }}"
     state: directory
 
+- name: Check if website directories exist
+  win_stat:
+    path: "{{ item.physical_path }}"
+  loop: "{{ websites }}"
+  register: website_dirs_stat
+
 - name: Backup existing website directories
   community.windows.win_zip:
-    src: "{{ item.physical_path }}"
-    dest: "{{ backup_dir }}\\{{ item.name }}_{{ lookup('ansible.date_time')['date'] }}.zip"
+    src: "{{ item.0.physical_path }}"
+    dest: "{{ backup_dir }}\\{{ item.0.name }}_{{ ansible_date_time.date }}.zip"
     compression: maximum
-  loop: "{{ websites }}"
-  when: win_stat(path=item.physical_path).stat.exists
+  loop: "{{ websites | zip(website_dirs_stat.results) | list }}"
+  when: item.1.stat.exists
 
 - name: Stop IIS websites if they exist
   community.windows.win_iis_website:
