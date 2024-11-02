@@ -11,6 +11,6 @@ RUN apt-get update && apt-get install -y docker-ce-cli zip \
   && curl -L "https://github.com/docker/compose/releases/download/v2.28.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \ 
   && chmod +x /usr/local/bin/docker-compose
 RUN apt install -y ansible python3-winrm 
-RUN ansible-galaxy collection install community.windows
+RUN ansible-galaxy collection install community.windows 
 USER jenkins
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"

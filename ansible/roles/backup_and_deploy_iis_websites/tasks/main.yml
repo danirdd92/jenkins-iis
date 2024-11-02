@@ -1,6 +1,6 @@
 ---
 - name: Ensure backup directory exists
-  win_file:
+  ansible.windows.win_file:
     path: "{{ backup_dir }}"
     state: directory
 
@@ -27,7 +27,7 @@
   ignore_errors: yes
 
 - name: Remove existing website directories
-  c.win_file:
+  win_file:
     path: "{{ item.physical_path }}"
     state: absent
   loop: "{{ websites }}"
