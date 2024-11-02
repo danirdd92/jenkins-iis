@@ -5,7 +5,7 @@
     state: directory
 
 - name: Backup existing website directories
-  win_zip:
+  community.windows.win_zip:
     src: "{{ item.physical_path }}"
     dest: "{{ backup_dir }}\\{{ item.name }}_{{ lookup('ansible.date_time')['date'] }}.zip"
     compression: maximum
@@ -13,21 +13,21 @@
   when: win_stat(path=item.physical_path).stat.exists
 
 - name: Stop IIS websites if they exist
-  win_iis_website:
+  community.windows.win_iis_website:
     name: "{{ item.name }}"
     state: stopped
   loop: "{{ websites }}"
   ignore_errors: yes
 
 - name: Remove IIS websites
-  win_iis_website:
+  community.windows.win_iis_website:
     name: "{{ item.name }}"
     state: absent
   loop: "{{ websites }}"
   ignore_errors: yes
 
 - name: Remove existing website directories
-  win_file:
+  c.win_file:
     path: "{{ item.physical_path }}"
     state: absent
   loop: "{{ websites }}"
@@ -40,19 +40,19 @@
   loop: "{{ websites }}"
 
 - name: Copy new website content to remote server
-  win_copy:
+  windows.win_copy:
     src: "{{ item.local_source }}/"
     dest: "{{ item.physical_path }}"
     recurse: yes
   loop: "{{ websites }}"
 
 - name: Ensure application pool exists
-  win_iis_webapppool:
+  community.windows.win_iis_webapppool:
     name: "{{ application_pool }}"
     state: started
 
 - name: Create and start IIS websites
-  win_iis_website:
+  community.windows.win_iis_website:
     name: "{{ item.name }}"
     state: started
     physical_path: "{{ item.physical_path }}"
