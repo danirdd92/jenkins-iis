@@ -55,7 +55,7 @@
   community.windows.win_iis_webapppool:
     name: "{{ item.application_pool }}"
     state: started
-    loop: "{{ websites }}"
+  loop: "{{ websites }}"
 
 - name: Create and start IIS websites
   community.windows.win_iis_website:
