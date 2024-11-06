@@ -4,5 +4,6 @@
       "file:///home/dani/tools/jenkins-iis/ansible/inventory.yaml",
       "file:///home/dani/tools/jenkins-iis/ansible/hosts.yaml"
     ]
-  }
+  },
+  "ansible.python.interpreterPath": "/bin/python3"
 }

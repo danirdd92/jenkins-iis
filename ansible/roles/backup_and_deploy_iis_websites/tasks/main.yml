@@ -53,8 +53,9 @@
 
 - name: Ensure application pool exists
   community.windows.win_iis_webapppool:
-    name: "{{ application_pool }}"
+    name: "{{ item.application_pool }}"
     state: started
+    loop: "{{ websites }}"
 
 - name: Create and start IIS websites
   community.windows.win_iis_website:
@@ -62,5 +63,5 @@
     state: started
     physical_path: "{{ item.physical_path }}"
     port: "{{ item.port }}"
-    application_pool: "{{ application_pool }}"
+    application_pool: "{{ item.application_pool }}"
   loop: "{{ websites }}"
