@@ -22,8 +22,8 @@ pipeline {
                     npm run build
 
                     # Create artifact directory and copy build output
-                    mkdir -p ../${reactArtifactDir}
-                    cp -r dist/* ../${reactArtifactDir}/
+                    mkdir -p ../ansible/files/wwwroot/${reactArtifactDir}
+                    cp -r dist/* ../ansible/files/wwwroot/${reactArtifactDir}/
                 """
             }
           }
@@ -44,8 +44,8 @@ pipeline {
                     dotnet publish -c Release -o publish
 
                     # Create artifact directory and copy publish output
-                    mkdir -p ../${dotnetArtifactDir}
-                    cp -r publish/* ../${dotnetArtifactDir}/
+                    mkdir -p ../ansible/files/wwwroot/${dotnetArtifactDir}
+                    cp -r publish/* ../ansible/files/wwwroot/${dotnetArtifactDir}/
                 """
               }
             }
