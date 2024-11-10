@@ -7,7 +7,6 @@ pipeline {
           steps {
             script {
               def reactAppName = 'react-vite-app'
-              def reactArtifactDir = "ansible/files/wwwroot/${reactAppName}"
               sh """
                     # Create a new React app using Vite
                     npx create-vite@latest ${reactAppName} --template react
@@ -22,8 +21,8 @@ pipeline {
                     npm run build
 
                     # Create artifact directory and copy build output
-                    mkdir -p ${WORKSPACE}/ansible/files/wwwroot/${reactArtifactDir}
-                    cp -r dist/* ${WORKSPACE}/ansible/files/wwwroot/${reactArtifactDir}/
+                    mkdir -p ${WORKSPACE}/ansible/files/wwwroot/${reactAppName}
+                    cp -r dist/* ${WORKSPACE}/ansible/files/wwwroot/${reactAppName}/
                 """
             }
           }
@@ -32,7 +31,6 @@ pipeline {
           steps {
             script {
               def dotnetAppName = 'aspnet-core-app'
-              def dotnetArtifactDir = "ansible/files/wwwroot/${dotnetAppName}"
               sh """
                     # Create a new ASP.NET Core web application
                     dotnet new webapp -o ${dotnetAppName}
@@ -44,8 +42,8 @@ pipeline {
                     dotnet publish -c Release -o publish
 
                     # Create artifact directory and copy publish output
-                    mkdir -p ${WORKSPACE}/ansible/files/wwwroot/${dotnetArtifactDir}
-                    cp -r publish/* ${WORKSPACE}/ansible/files/wwwroot/${dotnetArtifactDir}/
+                    mkdir -p ${WORKSPACE}/ansible/files/wwwroot/${dotnetAppName}
+                    cp -r publish/* ${WORKSPACE}/ansible/files/wwwroot/${dotnetAppName}/
                 """
               }
             }
