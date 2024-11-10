@@ -9,15 +9,22 @@ pipeline {
               def reactAppName = 'react-vite-app'
               def reactArtifactDir = "ansible/files/wwwroot/${reactAppName}"
               sh """
-                    npx create-vite@latest ${reactAppName} --template react
-                    cd ${reactAppName}
+                                # Create a new React app using Vite
+                                npx create-vite@latest ${reactAppName} --template react
 
-                    npm install
-                    npm run build
+                                # Navigate to the project directory
+                                cd ${reactAppName}
 
-                    mkdir -p ../${reactArtifactDir}
-                    cp -r dist/* ../${reactArtifactDir}/
-                """
+                                # Install dependencies
+                                npm install
+
+                                # Build the React app
+                                npm run build
+
+                                # Create artifact directory and copy build output
+                                mkdir -p ../${reactArtifactDir}
+                                cp -r dist/* ../${reactArtifactDir}/
+                            """
             }
           }
         }
@@ -27,32 +34,37 @@ pipeline {
               def dotnetAppName = 'aspnet-core-app'
               def dotnetArtifactDir = "ansible/files/wwwroot/${dotnetAppName}"
               sh """
-                    dotnet new webapp -o ${dotnetAppName}
-                    cd ${dotnetAppName}
+                                # Create a new ASP.NET Core web application
+                                dotnet new webapp -o ${dotnetAppName}
 
-                    dotnet publish -c Release -o publish
+                                # Navigate to the project directory
+                                cd ${dotnetAppName}
 
-                    mkdir -p ../${dotnetArtifactDir}
-                    cp -r publish/* ../${dotnetArtifactDir}/
-                """
+                                # Build and publish the .NET app
+                                dotnet publish -c Release -o publish
+
+                                # Create artifact directory and copy publish output
+                                mkdir -p ../${dotnetArtifactDir}
+                                cp -r publish/* ../${dotnetArtifactDir}/
+                            """
             }
           }
         }
       }
         }
         post {
-        success {
+      success {
         echo "Both React and ASP.NET Core applications were built and artifacts are stored in 'ansible/files/'."
-        }
-        failure {
-        echo 'Pipeline failed. Check the logs for details.'
-        }
-        }
-      stage('Deploy') {
-        steps {
-          echo 'Run ansible playbook that backups existing website for rollback and deploy new versions'
-          sh 'ansible-playbook -i /tmp/ansible/hosts.yaml /tmp/ansible/playbook.yaml '
-        }
       }
+      failure {
+        echo 'Pipeline failed. Check the logs for details.'
+      }
+        }
+        stage('Deploy') {
+      steps {
+        echo 'Run Ansible playbook to back up existing website for rollback and deploy new versions'
+        sh 'ansible-playbook -i /tmp/ansible/hosts.yaml /tmp/ansible/playbook.yaml'
+      }
+        }
     }
 }
